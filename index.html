@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Games Hub | RioDev</title>
+    <title>Card Games Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -93,6 +93,42 @@
             color: var(--secondary);
         }
         
+        /* Custom Blackjack icon container */
+        .blackjack-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Card shapes for Blackjack icon */
+        .blackjack-icon .card1,
+        .blackjack-icon .card2 {
+            position: absolute;
+            width: 50px;
+            height: 70px;
+            background-color: var(--white);
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--red);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .blackjack-icon .card1 {
+            transform: rotate(-10deg);
+            z-index: 2;
+        }
+        
+        .blackjack-icon .card2 {
+            transform: rotate(10deg) translateX(15px);
+            background-color: var(--black);
+            color: var(--white);
+        }
+        
         .game-title {
             font-size: 1.8rem;
             margin-bottom: 1rem;
@@ -160,7 +196,11 @@
     <div class="main-content">
         <div class="game-grid">
             <div class="game-card">
-                <i class="fas fa-club game-icon"></i>
+                <!-- Custom Blackjack icon with overlapping cards -->
+                <div class="blackjack-icon">
+                    <div class="card1">A</div>
+                    <div class="card2">K</div>
+                </div>
                 <h2 class="game-title">Blackjack</h2>
                 <p class="game-desc">
                     Try to beat the dealer without going over 21. 
@@ -182,21 +222,6 @@
                     <i class="fas fa-play"></i> Play Now
                 </a>
             </div>
-            
-            <!-- Add more game cards as you create new games -->
-            <!--
-            <div class="game-card">
-                <i class="fas fa-dice game-icon"></i>
-                <h2 class="game-title">Coming Soon</h2>
-                <p class="game-desc">
-                    More exciting games are in development. 
-                    Stay tuned for updates!
-                </p>
-                <button class="play-btn" disabled>
-                    <i class="fas fa-lock"></i> Coming Soon
-                </button>
-            </div>
-            -->
         </div>
     </div>
     
