@@ -674,12 +674,20 @@
         });
 
         // Load user data from Firestore
-        async function loadUserData() {
+      async function loadUserData() {
             try {
                 const doc = await db.collection('users').doc(currentUser.uid).get();
                 if (doc.exists) {
                     userData = doc.data();
                     balanceEl.textContent = formatMoney(userData.balance || 0);
+                    
+                    // Set up real-time listener for balance updates
+                    db.collection('users').doc(currentUser.uid).onSnapshot((doc) => {
+                        if (doc.exists) {
+                            const updatedData = doc.data();
+                            balanceEl.textContent = formatMoney(updatedData.balance || 0);
+                        }
+                    });
                 } else {
                     // Create user data if it doesn't exist
                     await db.collection('users').doc(currentUser.uid).set({
@@ -696,9 +704,28 @@
         }
 
         // Format money with commas
-        function formatMoney(value) {
-            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          function formatMoney(value) {
+            if (!value) return "0";
+            
+            // If value is a string with commas, remove them first
+            if (typeof value === 'string') {
+                value = parseFloat(value.replace(/,/g, ''));
+            }
+            
+            value = parseFloat(value);
+            
+            if (value >= 1000000000) {
+                return (value/1000000000).toFixed(1) + 'B';
+            }
+            if (value >= 1000000) {
+                return (value/1000000).toFixed(1) + 'M';
+            }
+            if (value >= 1000) {
+                return (value/1000).toFixed(1) + 'k';
+            }
+            return value.toFixed(0);
         }
+
 
         // Setup event listeners
         function setupEventListeners() {
